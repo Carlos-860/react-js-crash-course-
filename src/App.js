@@ -1,35 +1,74 @@
-import './index.css';
-import { useState } from 'react';
-import Employee from './components/Employee';
+import "./index.css";
+import { useState } from "react";
+import Employee from "./components/Employee";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [role, setRole] = useState('dev');
+  const [role, setRole] = useState("dev");
+  const [employees, setEmployees] = useState([
+    {
+      id: 1,
+      name: "Caleb",
+      role: "Devrel Engineer",
+      img: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+    {
+      id: 2,
+      name: "Sal",
+      role: "Manager",
+      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+    {
+      id: 3,
+      name: "John",
+      role: "Director of Eng.",
+      img: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+    {
+      id: 4,
+      name: "Melanie",
+      role: "Software Engineer",
+      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+    {
+      id: 5,
+      name: "Corey",
+      role: "The Devops guy",
+      img: "https://images.unsplash.com/photo-1498551172505-8ee7ad69f235?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+    {
+      id: 6,
+      name: "Jake",
+      role: "Senior Intern",
+      img: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    },
+  ]);
   const showEmployees = true;
   return (
     <div className="App">
-
-      {showEmployees ?
+      {showEmployees ? (
         <>
-          <input type="text" onChange={(e) => {
-            console.log(e.target.value)
-            setRole(e.target.value);
-          }} />
+          <input
+            type="text"
+            onChange={(e) => {
+              console.log(e.target.value);
+              setRole(e.target.value);
+            }}
+          />
           <div className="flex flex-wrap justify-center">
-            <Employee name="Caleb" role="Intern" image="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Abby" role={role} image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="John" image="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Caleb" role="Intern" image="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Abby" role={role} image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="John" image="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Caleb" role="Intern" image="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Abby" role={role} image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="John" image="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
-            <Employee name="Caleb" role="Intern" image="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
+            {employees.map((employee) => (
+              <Employee
+                key={uuidv4()}
+                name={employee.name}
+                role={employee.role}
+                img={employee.img}
+              />
+            ))}
           </div>
         </>
-        :
-        <p>You cannot see the employees</p>}
-
+      ) : (
+        <p>You cannot see the employees</p>
+      )}
     </div>
   );
 }
