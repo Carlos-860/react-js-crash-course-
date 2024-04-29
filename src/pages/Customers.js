@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 export default function Customers() {
     const [customers, setCustomers] = useState();
@@ -7,9 +8,10 @@ export default function Customers() {
     useEffect(() => {
         fetch('http://localhost:8000/api/customers/')
             .then((response) => { return response.json() })
-            .then((data) => { 
+            .then((data) => {
                 // console.log(data); 
-                setCustomers(data.customers) })
+                setCustomers(data.customers)
+            })
     }, [])
 
     return (
@@ -43,13 +45,12 @@ export default function Customers() {
                                         </a>
                                     </div>
                                     <div className="-ml-px flex w-0 flex-1">
-                                        <a
-                                            href='#'
+                                        <Link to={'/customers/' + customer.id}
                                             className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                                         >
                                             <PhoneIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                            Call
-                                        </a>
+                                            Details
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
