@@ -6,9 +6,7 @@ export default function DefinitionSearch() {
     const navigate = useNavigate();
 
     return (
-        <form className="flex space-between space-x-2 mx-w-[300px]" onSubmit={() => {
-            navigate('/dictionary/' + word)
-        }}>
+        <form className="flex space-between space-x-2 mx-w-[300px]" onSubmit={() => { navigate('/dictionary/' + word) }}>
             <input
                 className="shrink min-w-0 px-2 py-1 rounded"
                 placeholder="Dinosaur"
