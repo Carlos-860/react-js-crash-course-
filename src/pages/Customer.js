@@ -27,6 +27,26 @@ export default function Customer() {
             .catch((e) => console.log('Network Error'));
     }, []);
 
+    function deleteCustomer() {
+        const url = baseUrl + 'api/customers/' + id;
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        },)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong')
+                }
+                // assume things went well
+                navigate('/customers')
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    }
+
     return (
         <>
             {notFound ? <NotFound message={`The customer with id ${id} was not found`} /> : null}
@@ -37,6 +57,8 @@ export default function Customer() {
                     <p>Industry: {customer.industry}</p>
                 </div>) : null
             }
+            <button onClick={deleteCustomer}>Delete</button>
+            <br />
             <Link to="/customers">Go back</Link>
         </>
     );

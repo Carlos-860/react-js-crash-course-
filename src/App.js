@@ -15,6 +15,8 @@ import Customer from "./pages/Customer";
 
 
 function App() {
+
+  console.log(process.env, process.env.NODE_ENV, '--')
   return (
     <BrowserRouter>
       <Header>
@@ -24,8 +26,8 @@ function App() {
           <Route path="/customers/:id" element={<Customer />} />
           <Route path="/dictionary" element={<Dictionary />} />
           <Route path="/dictionary/:search" element={<Definition />} />
-          <Route path="/404" element={<NotFound/>} />
-          <Route path="*" element={<NotFound/>} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
       </Header>

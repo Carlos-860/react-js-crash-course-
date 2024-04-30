@@ -18,7 +18,7 @@ export default function Customers() {
 
     return (
         <div>
-            <h1>Customers page</h1>
+            <h1>Here are our customer(s):</h1>
             <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {customers ? customers.map((customer) => {
                     return (
@@ -56,7 +56,7 @@ export default function Customers() {
                                     </div>
                                 </div>
                             </div>
-                            <Link to={'/customers/' + 4}>404 product</Link>
+
                         </li>
                     )
                 })
@@ -64,6 +64,7 @@ export default function Customers() {
                     'Fetching cutomers...'
                 }
             </ul>
+            <Link to={'/customers/' + 1}>404 product</Link>
         </div>
     );
 }
