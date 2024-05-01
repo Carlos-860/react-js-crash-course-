@@ -5,23 +5,20 @@ import Modal from "react-bootstrap/Modal";
 function AddCustomer(props) {
   const [name, setName] = useState("");
   const [industry, setIndustry] = useState("");
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(props.show);
 
   return (
     <>
       <button
-        onClick={handleShow}
+        onClick={props.toggleShow}
         className="mx-auto block m-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
       >
         + Add Customer
       </button>
 
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={props.show}
+        onHide={props.toggleShow}
         backdrop="static"
         keyboard={false}
       >
@@ -33,7 +30,6 @@ function AddCustomer(props) {
             id="editModal"
             className="w-full max-w-sm"
             onSubmit={(e) => {
-              handleClose(); // can be moved to form submission button as well
               e.preventDefault();
               props.newCustomer(name, industry);
               setName('');
@@ -87,7 +83,7 @@ function AddCustomer(props) {
         <Modal.Footer>
           <button
             className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
-            onClick={handleClose}
+            onClick={props.toggleShow}
           >
             Close
           </button>

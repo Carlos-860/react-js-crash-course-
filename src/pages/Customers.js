@@ -6,6 +6,11 @@ import AddCustomer from "../components/AddCustomer";
 
 export default function Customers() {
     const [customers, setCustomers] = useState()
+    const [show, setShow] = useState();
+
+    function toggleShow() {
+        setShow(!show)
+    }
 
     useEffect(() => {
         const url = baseUrl + 'api/customers/'
@@ -34,9 +39,11 @@ export default function Customers() {
             }
             return response.json()
         }).then((data) => {
-            // assume the add was successful
-            // hide the modal
-            // make sure the list is updated appropriately
+            toggleShow();
+            setCustomers((prev) => {
+                return [...prev, data.customer]
+            })
+            
         }).catch((e) => {
             console.log(e)
         })
@@ -90,7 +97,7 @@ export default function Customers() {
                     'Fetching cutomers...'
                 }
             </ul>
-            <AddCustomer newCustomer={newCustomer} />
+            <AddCustomer newCustomer={newCustomer} show={show} toggleShow={toggleShow} />
         </div>
     );
 }
