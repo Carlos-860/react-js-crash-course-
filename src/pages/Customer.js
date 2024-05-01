@@ -8,19 +8,28 @@ export default function Customer() {
     const [tempCustomer, setTempCustomer] = useState();
     const [notFound, setNotFound] = useState();
     const [changed, setChanged] = useState(false);
+    const [error, setError] = useState();
+
 
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!customer) return
-        if (!tempCustomer) return
-        setChanged(() => {
-            if (JSON.stringify(customer) === JSON.stringify(tempCustomer)) {
-                return false
-            }
-            return true
-        })
+        if (!customer) return;
+        if (!tempCustomer) return;
+
+        let equal = true;
+        if (customer.name !== tempCustomer.name) equal = false; 
+        if (customer.industry !== tempCustomer.industry) equal = false; 
+        if (equal) setChanged(false);
+
+
+        // setChanged(() => {
+        //     if (JSON.stringify(customer) === JSON.stringify(tempCustomer)) {
+        //         return false
+        //     }
+        //     return true
+        // })
     })
 
     useEffect(() => {
@@ -55,11 +64,13 @@ export default function Customer() {
                 if (!response.ok) {
                     throw new Error('Something went wrong')
                 }
-                // assume things went well
+                
+                setError(undefined) // not really needed since we navigating
                 navigate('/customers')
             })
             .catch((e) => {
                 console.log(e);
+                setError(e.message)
             })
     }
 
@@ -73,17 +84,19 @@ export default function Customer() {
             body: JSON.stringify(tempCustomer)
         },).then((response) => {
             if (!response.ok) {
-                throw new Error('Something went wrong');
+                throw new Error('something went wrong');
             }
             return response.json();
         }).then((data) => {
             setChanged(false)
             setCustomer(data)
+            setError(undefined);
+
         }).catch((e) => {
             console.log(e);
+            setError(e.message);
         })
     }
-
 
     return (
         <>
@@ -122,10 +135,11 @@ export default function Customer() {
                             className="m-2"
                             onClick={updateCustomer}>Save</button>
                     </> : null}
+                    <button onClick={deleteCustomer}>Delete</button>
+                    {error ? <p>{error}</p> : null}
+                </div>
+            ) : null}
 
-                </div>) : null
-            }
-            <button onClick={deleteCustomer}>Delete</button>
             <br />
             <Link to="/customers">Go back</Link>
         </>
