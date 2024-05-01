@@ -13,6 +13,17 @@ export default function Customer() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!customer) return
+        if (!tempCustomer) return
+        setChanged(() => {
+            if (JSON.stringify(customer) === JSON.stringify(tempCustomer)) {
+                return false
+            }
+            return true
+        })
+    })
+
+    useEffect(() => {
         const url = baseUrl + 'api/customers/' + id
         fetch(url)
             .then(response => {
@@ -71,6 +82,7 @@ export default function Customer() {
         })
     }
 
+
     return (
         <>
             {notFound ? <NotFound message={`The customer with id ${id} was not found`} /> : null}
@@ -97,12 +109,16 @@ export default function Customer() {
                         }} />
 
                     {changed ? <>
-                        <button onClick={() => {
-                            setTempCustomer({ ...customer })
-                            setChanged(false)
+                        <button
+                            className="m-2"
+                            onClick={() => {
+                                setTempCustomer({ ...customer })
+                                setChanged(false)
 
-                        }}>Cancel</button>
-                        <button onClick={updateCustomer}>Save</button>
+                            }}>Cancel</button>
+                        <button
+                            className="m-2"
+                            onClick={updateCustomer}>Save</button>
                     </> : null}
 
                 </div>) : null
