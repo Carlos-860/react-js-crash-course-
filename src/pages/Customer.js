@@ -72,11 +72,13 @@ export default function Customer() {
             },
             body: JSON.stringify(tempCustomer)
         },).then((response) => {
+            if (!response.ok) {
+                throw new Error('Something went wrong');
+            }
             return response.json();
         }).then((data) => {
             setChanged(false)
             setCustomer(data)
-
         }).catch((e) => {
             console.log(e);
         })
