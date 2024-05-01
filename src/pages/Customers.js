@@ -2,12 +2,13 @@ import { useState, useEffect } from "react"
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 import { baseUrl } from "../shared";
+import AddCustomer from "../components/AddCustomer";
 
 export default function Customers() {
-    const [customers, setCustomers] = useState();
+    const [customers, setCustomers] = useState()
 
     useEffect(() => {
-        const url = baseUrl + 'api/customers/';
+        const url = baseUrl + 'api/customers/'
         fetch(url)
             .then((response) => { return response.json() })
             .then((data) => {
@@ -15,6 +16,31 @@ export default function Customers() {
                 setCustomers(data.customers)
             })
     }, [])
+
+    function newCustomer(name, industry) {
+        const url = baseUrl + 'api/customers/';
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                name,
+                industry
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error('Something went wrong')
+            }
+            return response.json()
+        }).then((data) => {
+            // assume the add was successful
+            // hide the modal
+            // make sure the list is updated appropriately
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
 
     return (
         <div>
@@ -64,7 +90,7 @@ export default function Customers() {
                     'Fetching cutomers...'
                 }
             </ul>
-            <Link to={'/customers/' + 1}>404 product</Link>
+            <AddCustomer newCustomer={newCustomer} />
         </div>
     );
 }
