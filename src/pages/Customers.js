@@ -43,7 +43,7 @@ export default function Customers() {
             setCustomers((prev) => {
                 return [...prev, data.customer]
             })
-            
+
         }).catch((e) => {
             console.log(e)
         })
@@ -52,51 +52,29 @@ export default function Customers() {
     return (
         <div>
             <h1>Here are our customer(s):</h1>
-            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 py-2">
                 {customers ? customers.map((customer) => {
                     return (
-                        <li key={customer.id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-                            <div className="flex w-full items-center justify-between space-x-6 p-6">
-                                <div className="flex-1 truncate">
-                                    <div className="flex items-center space-x-3">
-                                        <h3 className="truncate text-sm font-medium text-gray-900">{customer.name}</h3>
-                                        <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                            {customer.industry}
-                                        </span>
-                                    </div>
-                                    <p className="mt-1 truncate text-sm text-gray-500">{customer.industry}</p>
-                                </div>
-                                <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="" alt="" />
+                        <div
+                            key={customer.id}
+                            className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                        >
+                            <div className="flex-shrink-0">
+                                <div className="h-10 w-10 rounded-full bg-rose-200"></div>
                             </div>
-                            <div>
-                                <div className="-mt-px flex divide-x divide-gray-200">
-                                    <div className="flex w-0 flex-1">
-                                        <a
-                                            href="#"
-                                            className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                                        >
-                                            <EnvelopeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                            Email
-                                        </a>
-                                    </div>
-                                    <div className="-ml-px flex w-0 flex-1">
-                                        <Link to={'/customers/' + customer.id}
-                                            className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                                        >
-                                            <PhoneIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                            Details
-                                        </Link>
-                                    </div>
-                                </div>
+                            <div className="min-w-0 flex-1">
+                                <Link to={'/customers/' + customer.id} className="no-underline">
+                                    <p className="text-sm font-medium text-gray-900 mb-0">{customer.name}</p>
+                                    <p className="truncate text-sm text-gray-500 mb-0">{customer.industry}</p>
+                                </Link>
                             </div>
-
-                        </li>
-                    )
+                        </div>
+                    );
                 })
                     :
                     'Fetching cutomers...'
                 }
-            </ul>
+            </div>
             <AddCustomer newCustomer={newCustomer} show={show} toggleShow={toggleShow} />
         </div>
     );
