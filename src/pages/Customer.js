@@ -36,6 +36,8 @@ export default function Customer() {
                     // render a 404 component in this page : 2 --- other method
                     setNotFound(true)
                 }
+                if (response.status === 401) navigate('/login')
+
                 return response.json()
             })
             .then((data) => {

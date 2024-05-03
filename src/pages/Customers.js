@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { baseUrl } from "../shared";
 import AddCustomer from "../components/AddCustomer";
 
 export default function Customers() {
     const [customers, setCustomers] = useState()
     const [show, setShow] = useState();
+    const navigate = useNavigate();
 
     function toggleShow() {
         setShow(!show)
@@ -15,7 +16,10 @@ export default function Customers() {
     useEffect(() => {
         const url = baseUrl + 'api/customers/'
         fetch(url)
-            .then((response) => { return response.json() })
+            .then((response) => {
+                if (response.status === 401) navigate('/login')
+                return response.json()
+            })
             .then((data) => {
                 // console.log(data); 
                 setCustomers(data.customers)
