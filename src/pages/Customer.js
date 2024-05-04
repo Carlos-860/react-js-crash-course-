@@ -14,7 +14,6 @@ export default function Customer() {
 
 
     useEffect(() => {
-        console.log(customer)
         if (!customer) return;
         if (!tempCustomer) return;
 
@@ -27,7 +26,12 @@ export default function Customer() {
 
     useEffect(() => {
         const url = baseUrl + 'api/customers/' + id
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }
+        })
             .then(response => {
                 if (response.status === 404) {
                     // redirect to a 404 page (new URL) : 1 --- easier method
@@ -53,10 +57,13 @@ export default function Customer() {
         fetch(url, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             }
         },)
             .then((response) => {
+                if (response.status === 401) navigate('/login')
+
                 if (!response.ok) {
                     throw new Error('Something went wrong')
                 }
@@ -77,10 +84,12 @@ export default function Customer() {
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             },
             body: JSON.stringify(tempCustomer)
         },).then((response) => {
+            if (response.status === 401) navigate('/login')
             if (!response.ok) {
                 throw new Error('something went wrong');
             }

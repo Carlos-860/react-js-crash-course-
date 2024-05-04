@@ -15,13 +15,17 @@ export default function Customers() {
 
     useEffect(() => {
         const url = baseUrl + 'api/customers/'
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
+            }
+        })
             .then((response) => {
                 if (response.status === 401) navigate('/login')
                 return response.json()
             })
             .then((data) => {
-                // console.log(data); 
                 setCustomers(data.customers)
             })
     }, [])
@@ -35,7 +39,8 @@ export default function Customers() {
                 industry
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('access')
             }
         }).then((response) => {
             if (!response.ok) {
