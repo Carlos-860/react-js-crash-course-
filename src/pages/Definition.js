@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import NotFound from "../components/NotFound";
 import DefinitionSearch from "../components/DefinitionSearch";
@@ -11,6 +11,8 @@ export default function Definition() {
 
   let { search } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   useEffect(() => {
     // const url = "https://httpstat.us/501";
@@ -19,13 +21,9 @@ export default function Definition() {
     fetch(url)
       .then((response) => {
         console.log(response.status);
-        if (response.status === 404) {
-          setNotFound(true);
-        } else if (response.status === 401) {
-          navigate("/login");
-        } else if (response.status === 500) {
-            // setServerError(true);
-        }
+        if (response.status === 404) setNotFound(true);
+        else if (response.status === 401) navigate("/login", { state: { previousUrl: location.pathname, } });
+        else if (response.status === 500) // setServerError(true);
 
         // Catch bogus urls and throw and error
         if (!response.ok) {
